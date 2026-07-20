@@ -1,0 +1,988 @@
+/* ==========================================================================
+   TITIK LAPOR — Design System
+   --------------------------------------------------------------------------
+   Struktur token mengikuti gaya Teras Data (surface/line/raised + dark mode
+   lewat atribut data-theme), dengan identitas warna sendiri: indigo→violet
+   sebagai brand dan amber sebagai aksen. Status laporan punya token khusus
+   supaya warna badge, penanda peta, dan linimasa tidak pernah berbeda.
+
+   Tipografi memakai system font stack — tanpa unduhan font eksternal, agar
+   Content-Security-Policy dapat dikunci ke 'self'.
+   ========================================================================== */
+
+:root {
+  /* ── Brand ─────────────────────────────────────────────────────────────── */
+  --brand: #4338ca;
+  --brand-2: #6366f1;
+  --brand-3: #7c3aed;
+  --brand-ink: #312e81;
+  --accent: #f59e0b;
+  --accent-soft: #fcd34d;
+
+  --brand-gradient: linear-gradient(135deg, #4338ca 0%, #6d28d9 55%, #7c3aed 100%);
+
+  /* ── Token semantik (di-override pada dark mode) ───────────────────────── */
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-sunken: #f7f9fd;
+  --raised: #f1f3fa;
+  --raised-hover: #e8ebf6;
+  --input-bg: #ffffff;
+  --input-border: #d8dcea;
+  --text: #131a2b;
+  --muted: #64708b;
+  --line: #e5e8f2;
+  --line-soft: #eef1f8;
+  --hover: #f8f9fe;
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --overlay: rgba(19, 26, 43, 0.45);
+
+  --btn-primary-bg: #4338ca;
+  --btn-primary-hover: #3730a3;
+
+  --sidebar-w: 268px;
+  --topbar-h: 64px;
+
+  /* ── Warna status laporan ──────────────────────────────────────────────── */
+  --st-baru: #64748b;
+  --st-baru-bg: #f1f5f9;
+  --st-verifikasi: #0284c7;
+  --st-verifikasi-bg: #e0f2fe;
+  --st-proses: #b45309;
+  --st-proses-bg: #fef3c7;
+  --st-selesai: #047857;
+  --st-selesai-bg: #d1fae5;
+  --st-tolak: #be123c;
+  --st-tolak-bg: #ffe4e6;
+
+  /* ── Feedback umum ─────────────────────────────────────────────────────── */
+  --success: #059669;
+  --success-bg: #ecfdf5;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --info: #0891b2;
+  --info-bg: #ecfeff;
+
+  --skeleton-a: #eceff7;
+  --skeleton-b: #f6f8fc;
+
+  /* ── Bentuk & bayangan ─────────────────────────────────────────────────── */
+  --radius-lg: 20px;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+
+  --shadow-xs: 0 1px 2px rgba(19, 26, 43, 0.04);
+  --shadow-sm: 0 2px 6px rgba(19, 26, 43, 0.05), 0 1px 2px rgba(19, 26, 43, 0.04);
+  --shadow: 0 4px 16px rgba(19, 26, 43, 0.07), 0 1px 3px rgba(19, 26, 43, 0.05);
+  --shadow-lg: 0 20px 44px rgba(19, 26, 43, 0.14), 0 4px 12px rgba(19, 26, 43, 0.06);
+  --glow-brand: 0 8px 26px rgba(99, 102, 241, 0.3);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 'Plus Jakarta Sans' hanya dipakai bila sudah terpasang di sistem
+     pengguna — tidak ada unduhan font dari host luar. */
+  --font-sans:
+    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ===== Dark mode ===== */
+:root[data-theme='dark'] {
+  --bg: #060912;
+  --surface: #0e1424;
+  --surface-sunken: #0a101d;
+  --raised: #161f34;
+  --raised-hover: #1d2740;
+  --input-bg: #0a101d;
+  --input-border: #28324c;
+  --text: #e5eaf5;
+  --muted: #94a1bb;
+  --line: #212b45;
+  --line-soft: #182034;
+  --hover: #121a2c;
+  --glass-bg: rgba(9, 13, 24, 0.84);
+  --overlay: rgba(3, 5, 12, 0.6);
+
+  --btn-primary-bg: #4f46e5;
+  --btn-primary-hover: #6366f1;
+
+  --st-baru: #94a3b8;
+  --st-baru-bg: rgba(100, 116, 139, 0.16);
+  --st-verifikasi: #7dd3fc;
+  --st-verifikasi-bg: rgba(2, 132, 199, 0.18);
+  --st-proses: #fcd34d;
+  --st-proses-bg: rgba(217, 119, 6, 0.18);
+  --st-selesai: #6ee7b7;
+  --st-selesai-bg: rgba(5, 150, 105, 0.18);
+  --st-tolak: #fda4af;
+  --st-tolak-bg: rgba(190, 18, 60, 0.18);
+
+  --success-bg: rgba(5, 150, 105, 0.16);
+  --danger-bg: rgba(220, 38, 38, 0.16);
+  --warning-bg: rgba(217, 119, 6, 0.16);
+  --info-bg: rgba(8, 145, 178, 0.16);
+
+  --skeleton-a: #121a2c;
+  --skeleton-b: #1a2439;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.58);
+
+  color-scheme: dark;
+}
+
+@media (min-width: 981px) {
+  :root.sb-collapsed {
+    --sidebar-w: 84px;
+  }
+}
+
+/* ==========================================================================
+   Dasar
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(67, 56, 202, 0.08), transparent 42%),
+    radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.07), transparent 38%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 250ms var(--ease),
+    color 250ms var(--ease);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: #131a2b;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #9aa5bd;
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+:root[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #2c3856;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.42);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Hormati preferensi pengguna yang sensitif terhadap animasi. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Target lompat keyboard ke konten utama. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  padding: 12px 20px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 700;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ==========================================================================
+   Tipografi & header halaman
+   ========================================================================== */
+
+.page-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  margin: 0 0 4px;
+}
+.page-subtitle {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 22px;
+}
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+}
+.text-muted {
+  color: var(--muted);
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   Kartu & grid
+   ========================================================================== */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  transition:
+    box-shadow 200ms var(--ease),
+    border-color 250ms var(--ease),
+    background-color 250ms var(--ease);
+}
+.card-flush {
+  padding: 0;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 750;
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+.hover-lift {
+  transition:
+    transform 220ms var(--ease),
+    box-shadow 220ms var(--ease);
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+.grid-cards {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Tombol
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.3;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 150ms var(--ease);
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-sm {
+  padding: 7px 13px;
+  font-size: 0.82rem;
+  border-radius: 9px;
+}
+.btn-lg {
+  padding: 13px 26px;
+  font-size: 1rem;
+  border-radius: 13px;
+}
+.btn-block {
+  width: 100%;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  box-shadow: var(--glow-brand);
+}
+.btn-gradient {
+  background: var(--brand-gradient);
+  color: #fff;
+  border: none;
+}
+.btn-gradient:hover:not(:disabled) {
+  box-shadow: var(--glow-brand);
+  filter: brightness(1.06);
+}
+.btn-secondary {
+  background: var(--raised);
+  border-color: var(--line);
+  color: var(--text);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--raised-hover);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--raised);
+  color: var(--text);
+}
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.btn-outline {
+  background: transparent;
+  border-color: var(--input-border);
+  color: var(--text);
+}
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--brand-2);
+  color: var(--brand-2);
+}
+
+/* ==========================================================================
+   Formulir
+   ========================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.label {
+  font-size: 0.84rem;
+  font-weight: 650;
+  color: var(--text);
+}
+.label .req {
+  color: var(--danger);
+  margin-left: 2px;
+}
+.hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.error-text {
+  font-size: 0.78rem;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color 150ms var(--ease),
+    box-shadow 150ms var(--ease);
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--brand-2);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+.input.is-invalid,
+.textarea.is-invalid {
+  border-color: var(--danger);
+}
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.select {
+  appearance: none;
+  /* Chevron sebagai data URI — tidak butuh permintaan jaringan tambahan. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2364708b'%3E%3Cpath d='M4.4 6.2 8 9.8l3.6-3.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-group .input {
+  padding-left: 40px;
+}
+.input-group .input-icon {
+  position: absolute;
+  left: 13px;
+  color: var(--muted);
+  pointer-events: none;
+  display: flex;
+}
+
+/* ==========================================================================
+   Badge & chip
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.badge-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.badge-BARU {
+  background: var(--st-baru-bg);
+  color: var(--st-baru);
+}
+.badge-DIVERIFIKASI {
+  background: var(--st-verifikasi-bg);
+  color: var(--st-verifikasi);
+}
+.badge-DIPROSES {
+  background: var(--st-proses-bg);
+  color: var(--st-proses);
+}
+.badge-SELESAI {
+  background: var(--st-selesai-bg);
+  color: var(--st-selesai);
+}
+.badge-DITOLAK {
+  background: var(--st-tolak-bg);
+  color: var(--st-tolak);
+}
+.badge-neutral {
+  background: var(--raised);
+  color: var(--muted);
+}
+.badge-brand {
+  background: rgba(99, 102, 241, 0.14);
+  color: var(--brand-2);
+}
+.badge-accent {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 150ms var(--ease);
+}
+.chip:hover {
+  border-color: var(--brand-2);
+  color: var(--brand-2);
+}
+.chip.is-active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Tabel
+   ========================================================================== */
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-sunken);
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.76rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.table tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr {
+  transition: background-color 130ms var(--ease);
+}
+.table tbody tr:hover {
+  background: var(--hover);
+}
+
+/* ==========================================================================
+   Status, linimasa & keadaan kosong
+   ========================================================================== */
+
+.timeline {
+  position: relative;
+  padding-left: 26px;
+  margin: 0;
+  list-style: none;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--line);
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 18px;
+}
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--brand-2);
+}
+.timeline-item.is-done::before {
+  background: var(--brand-2);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 54px 24px;
+  text-align: center;
+  color: var(--muted);
+}
+.empty-state svg {
+  opacity: 0.5;
+}
+.empty-state h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+}
+.empty-state p {
+  margin: 0;
+  font-size: 0.88rem;
+  max-width: 380px;
+}
+
+.skeleton {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-a) 25%,
+    var(--skeleton-b) 50%,
+    var(--skeleton-a) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   Alert & toast
+   ========================================================================== */
+
+.alert {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  border: 1px solid transparent;
+}
+.alert-success {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: currentColor;
+}
+.alert-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: currentColor;
+}
+.alert-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: currentColor;
+}
+.alert-info {
+  background: var(--info-bg);
+  color: var(--info);
+  border-color: currentColor;
+}
+
+.toast-stack {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(380px, calc(100vw - 36px));
+}
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.88rem;
+  animation: toast-in 260ms var(--ease);
+}
+.toast-success {
+  border-left: 4px solid var(--success);
+}
+.toast-error {
+  border-left: 4px solid var(--danger);
+}
+.toast-info {
+  border-left: 4px solid var(--info);
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: var(--overlay);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fade-in 180ms var(--ease);
+}
+.modal {
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: modal-in 220ms var(--ease);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px 0;
+}
+.modal-body {
+  padding: 16px 22px;
+}
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 22px 20px;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}
+
+/* ==========================================================================
+   Peta (Leaflet)
+   ========================================================================== */
+
+.map-shell {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--surface-sunken);
+}
+/* Basemap gelap: filter membuat tile terang cocok dengan tema gelap tanpa
+   perlu berlangganan penyedia tile khusus. */
+:root[data-theme='dark'] .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.92);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+.leaflet-bar a,
+.leaflet-control-attribution {
+  color: #1f2937;
+}
+
+.map-marker {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px 999px 999px 2px;
+  transform: rotate(-45deg);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 12px;
+}
+.map-marker > * {
+  transform: rotate(45deg);
+}
+
+.map-toolbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.map-legend {
+  position: absolute;
+  bottom: 22px;
+  left: 12px;
+  z-index: 500;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  font-size: 0.78rem;
+}
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Utilitas
+   ========================================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 18px 0;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
