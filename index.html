@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Titik Lapor — laporkan masalah infrastruktur dan lingkungan di sekitar Anda, pantau tindak lanjutnya di peta."
+    />
+    <meta name="theme-color" content="#4338ca" />
+    <title>Titik Lapor — Lapor Masalah, Pantau Tindak Lanjutnya</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!--
+      Tanpa font & ikon dari CDN eksternal: seluruh aset berasal dari origin
+      sendiri sehingga Content-Security-Policy dapat dikunci ke 'self' tanpa
+      pengecualian host pihak ketiga. Tipografi memakai system font stack.
+      Skrip tema dipisah ke berkas sendiri (bukan inline) dengan alasan sama.
+    -->
+    <script src="/theme-init.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: sans-serif">
+        Titik Lapor memerlukan JavaScript aktif untuk menampilkan peta laporan.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
