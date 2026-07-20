@@ -49,12 +49,12 @@ function tinggiBatang(nilai, maks) {
       </p>
     </header>
 
-    <div v-if="memuat" class="grid grid-cards">
+    <div v-if="memuat" class="grid grid-stat">
       <div v-for="n in 4" :key="n" class="skeleton" style="height: 96px" />
     </div>
 
     <template v-else-if="statistik">
-      <div class="grid grid-cards" style="margin-bottom: 26px">
+      <div class="grid grid-stat" style="margin-bottom: 26px">
         <StatCard
           label="Total Laporan"
           :nilai="statistik.ringkasan.total"
@@ -183,6 +183,8 @@ function tinggiBatang(nilai, maks) {
 .tren-batang {
   flex: 1;
   min-width: 3px;
+  /* Batasi lebar agar satu-dua hari data tidak melebar jadi blok penuh. */
+  max-width: 26px;
   border-radius: 3px 3px 0 0;
   background: var(--brand-gradient);
   opacity: 0.85;

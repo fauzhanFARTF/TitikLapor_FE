@@ -318,6 +318,11 @@ textarea:focus-visible,
   display: grid;
   gap: 16px;
 }
+/* Kartu statistik lebih sempit daripada kartu laporan, supaya empat ringkasan
+   dasbor muat dalam satu baris di layar desktop. */
+.grid-stat {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
 .grid-cards {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
