@@ -6,12 +6,13 @@
   "description": "Titik Lapor — platform pelaporan masalah publik berbasis peta (Vue 3 + Vite)",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/gen-headers.js && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext .js,.vue",
     "format": "prettier --write \"src/**/*.{js,vue,css}\"",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "gen:headers": "node scripts/gen-headers.js"
   },
   "dependencies": {
     "axios": "^1.7.9",
