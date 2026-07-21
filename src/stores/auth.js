@@ -70,8 +70,26 @@ export const useAuthStore = defineStore('auth', () => {
     return profil
   }
 
-  function keluar() {
-    bersihkanSesi()
+  /**
+   * Keluar dari sesi.
+   *
+   * Refresh token dicabut di server lebih dulu — menghapusnya dari
+   * localStorage saja tidak membuatnya tidak berlaku, dan token yang telanjur
+   * tersalin masih bisa dipakai sampai masa berlakunya habis.
+   *
+   * Kalau permintaan itu gagal (jaringan mati, token sudah kedaluwarsa), sesi
+   * lokal tetap dibersihkan: dari sudut pandang pengguna, menekan "keluar"
+   * harus selalu mengeluarkannya.
+   */
+  async function keluar() {
+    const refresh = localStorage.getItem(STORAGE_KEY.REFRESH)
+    try {
+      if (refresh) await authApi.keluar(refresh)
+    } catch {
+      // Diabaikan dengan sengaja — lihat catatan di atas.
+    } finally {
+      bersihkanSesi()
+    }
   }
 
   return {

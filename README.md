@@ -99,7 +99,8 @@ seragam `TitikLapor123!`: `admin@titiklapor.id`, `petugas@titiklapor.id`,
 | `npm run preview` | Menjalankan hasil build secara lokal |
 | `npm test` | Pengujian Vitest |
 | `npm run gen:headers` | Menulis ulang `vercel.json` & snippet Nginx |
-| `npm run lint` · `format` | ESLint · Prettier |
+| `npm run lint` · `lint:fix` | ESLint (seluruh repo) |
+| `npm run format` | Prettier |
 
 ---
 
@@ -268,7 +269,7 @@ setiap pull request:
 
 | Job | Isi |
 |---|---|
-| **Test & Build** | `npm ci` → `npm test` (Vitest) → `npm run build`, lalu memastikan konfigurasi header tetap sinkron. Hasil `dist/` diunggah sebagai artifact |
+| **Test & Build** | `npm ci` → `npm run lint` → `npm test` (Vitest) → `npm run build`, lalu memastikan konfigurasi header tetap sinkron. Hasil `dist/` diunggah sebagai artifact |
 | **Audit dependensi** | `npm audit --audit-level=moderate` |
 
 Langkah paling penting di sana adalah **pemeriksaan sinkronisasi header**.

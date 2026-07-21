@@ -11,6 +11,10 @@ export const authApi = {
     return ambilData(await client.post('/auth/register/', payload))
   },
 
+  async keluar(refresh) {
+    return ambilData(await client.post('/auth/logout/', { refresh }))
+  },
+
   async profil() {
     return ambilData(await client.get('/auth/profil/'))
   },

@@ -5,7 +5,6 @@ import { onMounted, ref } from 'vue'
 import { publikApi } from '@/api/laporan'
 import PetaLaporan from '@/components/map/PetaLaporan.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
-import { APP_NAME } from '@/utils/constants'
 
 const fitur = ref(null)
 const memuat = ref(true)
