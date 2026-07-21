@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test & Build
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Pasang dependensi
+        # `npm ci` menghormati package-lock.json apa adanya — hasil CI jadi
+        # sama persis dengan yang diuji di mesin lokal.
+        run: npm ci
+
+      - name: Vitest
+        run: npm test
+
+      - name: Build produksi
+        run: npm run build
+
+      - name: Pastikan konfigurasi header sudah ter-commit
+        # `npm run build` menjalankan gen-headers.js. Kalau hasilnya berbeda
+        # dari yang ada di repo, berarti security-headers.js diubah tanpa
+        # meregenerasi vercel.json — dan situs live akan memakai kebijakan
+        # lama tanpa ada yang menyadarinya.
+        run: |
+          if ! git diff --exit-code --stat vercel.json deploy/nginx/security-headers.conf; then
+            echo "::error::vercel.json / security-headers.conf tidak sinkron dengan security-headers.js. Jalankan 'npm run gen:headers' lalu commit hasilnya."
+            exit 1
+          fi
+          echo "Konfigurasi header sinkron."
+
+      - name: Unggah hasil build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  audit:
+    name: Audit dependensi
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: npm audit
+        # Ambang di 'moderate': kerentanan low pada dependensi build jarang
+        # dapat dieksploitasi dari situs statis, dan menggagalkan CI karenanya
+        # justru membuat orang terbiasa mengabaikan hasil audit.
+        run: npm audit --audit-level=moderate

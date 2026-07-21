@@ -1,5 +1,7 @@
 # Titik Lapor — Frontend
 
+[![CI](https://github.com/fauzhanFARTF/TitikLapor_FE/actions/workflows/ci.yml/badge.svg)](https://github.com/fauzhanFARTF/TitikLapor_FE/actions/workflows/ci.yml)
+
 Antarmuka web platform pelaporan masalah publik berbasis peta. Dibangun dengan
 **Vue 3 (Composition API) + Vite + Pinia + Vue Router + Leaflet**, tanpa
 kerangka CSS pihak ketiga — seluruh tampilan berdiri di atas design system
@@ -20,6 +22,7 @@ sendiri berbasis CSS custom properties.
 - [Peta & Fitur GIS](#peta--fitur-gis)
 - [Header Keamanan](#header-keamanan)
 - [Pengujian](#pengujian)
+- [Integrasi Berkelanjutan](#integrasi-berkelanjutan)
 - [Deployment](#deployment)
 - [Alur Kerja Git](#alur-kerja-git)
 
@@ -255,6 +258,29 @@ npm test
   Pelanggaran gagal di CI, bukan baru ketahuan saat pemindaian keamanan.
 - `src/__tests__/format.test.js` — pemformat jarak, durasi, waktu relatif,
   angka, dan inisial nama.
+
+---
+
+## Integrasi Berkelanjutan
+
+`.github/workflows/ci.yml` berjalan pada setiap push ke `main`/`develop` dan
+setiap pull request:
+
+| Job | Isi |
+|---|---|
+| **Test & Build** | `npm ci` → `npm test` (Vitest) → `npm run build`, lalu memastikan konfigurasi header tetap sinkron. Hasil `dist/` diunggah sebagai artifact |
+| **Audit dependensi** | `npm audit --audit-level=moderate` |
+
+Langkah paling penting di sana adalah **pemeriksaan sinkronisasi header**.
+`npm run build` menjalankan `gen-headers.js`; kalau hasilnya berbeda dari
+`vercel.json` yang ada di repo, artinya `security-headers.js` diubah tanpa
+meregenerasi konfigurasi — dan situs live akan tetap memakai kebijakan lama
+tanpa ada yang menyadarinya. CI menggagalkan build dalam kondisi itu.
+
+Ambang audit ditetapkan di `moderate`, bukan `low`. Kerentanan `low` pada
+dependensi build jarang dapat dieksploitasi dari situs statis, dan
+menggagalkan CI karenanya justru membuat orang terbiasa mengabaikan hasil
+audit.
 
 ---
 
