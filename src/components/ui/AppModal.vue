@@ -4,7 +4,7 @@ import { onBeforeUnmount, onMounted } from 'vue'
 
 import AppIcon from './AppIcon.vue'
 
-const props = defineProps({
+defineProps({
   judul: { type: String, default: '' },
   lebar: { type: String, default: '520px' },
 })

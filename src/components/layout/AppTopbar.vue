@@ -27,8 +27,8 @@ function cari() {
   kueri.value = ''
 }
 
-function keluar() {
-  auth.keluar()
+async function keluar() {
+  await auth.keluar()
   ui.sukses('Anda telah keluar.')
   router.push('/masuk')
 }
