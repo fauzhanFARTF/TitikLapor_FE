@@ -57,10 +57,13 @@ export const PRIORITAS_LABEL = {
   TINGGI: 'Tinggi',
 }
 
+// Default: pusat Kabupaten Tangerang — wilayah yang datanya ada di
+// spatial/data/ pada repo backend. Titik di luar cakupan itu tidak akan
+// mendapat pengisian kelurahan/kecamatan otomatis.
 export const MAP_DEFAULT = {
-  lat: Number(import.meta.env.VITE_MAP_CENTER_LAT ?? -6.1754),
-  lng: Number(import.meta.env.VITE_MAP_CENTER_LNG ?? 106.8272),
-  zoom: Number(import.meta.env.VITE_MAP_ZOOM ?? 13),
+  lat: Number(import.meta.env.VITE_MAP_CENTER_LAT ?? -6.1817),
+  lng: Number(import.meta.env.VITE_MAP_CENTER_LNG ?? 106.5314),
+  zoom: Number(import.meta.env.VITE_MAP_ZOOM ?? 11),
 }
 
 export const STORAGE_KEY = {
