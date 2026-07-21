@@ -32,6 +32,9 @@ jobs:
         # sama persis dengan yang diuji di mesin lokal.
         run: npm ci
 
+      - name: ESLint
+        run: npm run lint
+
       - name: Vitest
         run: npm test
 

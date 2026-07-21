@@ -8,7 +8,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import StatCard from '@/components/ui/StatCard.vue'
 import { useAuthStore } from '@/stores/auth'
-import { STATUS_HEX, STATUS_LABEL } from '@/utils/constants'
+import { STATUS_HEX } from '@/utils/constants'
 import { formatAngka } from '@/utils/format'
 
 const auth = useAuthStore()
